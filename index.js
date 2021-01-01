@@ -1,9 +1,12 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
+
+dotenv.config();
 //connect.db
-mongoose.connect('mongodb+srv://udara:udara@users.yoj80.mongodb.net/<dbname>?retryWrites=true&w=majority',
+mongoose.connect(process.env.DB_CONNECT,
 { useNewUrlParser: true },
 console.log("connected to DB"));
 
