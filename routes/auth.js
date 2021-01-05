@@ -1,11 +1,13 @@
 const router = require('express').Router();
 const User = require('../models/User');
+const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv');
 const {registerValidation, loginValidation} = require("../validation");
 const bcrypt = require('bcryptjs');
 
 
 
-
+dotenv.config();
 
 router.post('/register', async(req,res)=>{
 
@@ -56,7 +58,9 @@ router.post('/login', async (req,res)=>{
     if(!validPass) return res.status(400).send("email or password is wrong");
     
 
-    res.send("logged in");
+    //create and assign token
+    const token = jwt.sign({_id:user._id}, process.env.TOKEN_SECRET);
+    res.header('auth-token', token).send(user._id);
 
 
 
